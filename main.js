@@ -1,8 +1,10 @@
-const depNo = 40
+const depNo = 42
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
 const telegramAppUrl = 'https://api.telegram.org/bot' + token
-const webAppUrl =
-  'https://script.google.com/macros/s/AKfycbzcFpg2hNfBR7JiZTpqn-9etmDfiE8v-tOFOcTVDRfdfs6xxjC6huhPopssEHDkGzxo/exec'
+const deploymentId =
+  'AKfycbzcFpg2hNfBR7JiZTpqn-9etmDfiE8v-tOFOcTVDRfdfs6xxjC6huhPopssEHDkGzxo'
+const webAppUrl = 'https://script.google.com/macros/s/' + deploymentId + '/exec'
+const dbId = '1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8'
 
 function setWebhook() {
   const url = telegramAppUrl + '/setWebhook?url=' + webAppUrl
@@ -23,16 +25,11 @@ function sendMessage(id, text) {
 }
 
 const bot = {
-  create: function (teleUser, id) {
-    const databaseSheetId = '1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8'
-    const sheet = SpreadsheetApp.openById(databaseSheetId).getSheets()[0]
-
-    const tempSheet = SpreadsheetApp.create(teleUser + '-hcanoe-temp-input')
-    const tempSheetId = tempSheet.getId()
-    const tempSheetUrl = tempSheet.getUrl()
-    tempSheet.addEditor('nikelyvengun@gmail.com')
-
-    sheet.appendRow([timestamp(), 'next column text'])
+  create: function (teleUser) {
+    const t = SpreadsheetApp.create(teleUser + '-hcanoe-temp-input')
+    const tempSheetId = t.getId()
+    const tempSheetUrl = t.getUrl()
+    t.addEditor('nikelyvengun@gmail.com')
 
     /* move the file, specifically to brew4k@gmail.com's
      * `/My Drive/hcanoe/temp` directory
@@ -44,6 +41,12 @@ const bot = {
     return tempSheetUrl
   },
 }
+
+/*
+ * appends row to a spreadsheet given its id
+ */
+// const sheet = SpreadsheetApp.openById(dbId).getSheets()[0]
+// sheet.appendRow([timestamp(), 'next column text'])
 
 function doPost(e) {
   const contents = JSON.parse(e.postData.contents)
@@ -59,7 +62,7 @@ function doPost(e) {
   switch (text) {
     case '/create':
       sendMessage(id, 'you chose to create!')
-      const url = bot.create(teleUser, id)
+      const url = bot.create(teleUser)
       sendMessage(id, 'your temporary input sheet url is ' + url)
       break
     case '/list':
