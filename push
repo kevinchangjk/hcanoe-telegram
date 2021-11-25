@@ -1,6 +1,7 @@
 #! /bin/zsh
 
-$HOME/.local/bin/nvim Code.js -c ":exe \"norm! $\<C-a>\" | wq"
+$HOME/.local/bin/nvim main.js -c ":exe \"norm! \/deploymentNumber\<CR>$\<C-a>\" | wq"
+
 clasp push
 clasp deploy \
   -d 'hcanoe-telegram' \

@@ -1,4 +1,5 @@
-const depNo = 42
+const deploymentNumber = 55
+const tempFolderId = '1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd'
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
 const telegramAppUrl = 'https://api.telegram.org/bot' + token
 const deploymentId =
@@ -8,37 +9,21 @@ const dbId = '1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8'
 
 function setWebhook() {
   const url = telegramAppUrl + '/setWebhook?url=' + webAppUrl
-  const response = UrlFetchApp.fetch(url)
-  Logger.log(response.getContentText())
-}
-
-function sendMessage(id, text) {
-  const url =
-    telegramAppUrl +
-    '/sendMessage?chat_id=' +
-    id +
-    '&text=' +
-    text +
-    '&disable_web_page_preview=true'
   UrlFetchApp.fetch(url)
   // const response = UrlFetchApp.fetch(url)
+  // Logger.log(response.getContentText())
 }
 
-const bot = {
-  create: function (teleUser) {
-    const t = SpreadsheetApp.create(teleUser + '-hcanoe-temp-input')
-    const tempSheetId = t.getId()
-    const tempSheetUrl = t.getUrl()
-    t.addEditor('nikelyvengun@gmail.com')
-
-    /* move the file, specifically to brew4k@gmail.com's
-     * `/My Drive/hcanoe/temp` directory
-     */
-    const source = DriveApp.getFileById(tempSheetId)
-    const target = DriveApp.getFolderById('1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd')
-    source.moveTo(target)
-
-    return tempSheetUrl
+const telegram = {
+  sendMessage: function (id, text) {
+    const url =
+      telegramAppUrl +
+      '/sendMessage?chat_id=' +
+      id +
+      '&text=' +
+      text +
+      '&disable_web_page_preview=true'
+    UrlFetchApp.fetch(url)
   },
 }
 
@@ -50,29 +35,33 @@ const bot = {
 
 function doPost(e) {
   const contents = JSON.parse(e.postData.contents)
-  const incoming = {
-    id: contents.message.from.id,
-  }
+
+  /* incoming info */
   const id = contents.message.from.id
   const text = contents.message.text
-  const teleUser = contents.message.from.username
+  const user = contents.message.from.username
+  function reply(t) {
+    telegram.sendMessage(id, t)
+  }
 
-  sendMessage(id, 'deployment ' + depNo)
+  reply('deployment ' + deploymentNumber)
 
   switch (text) {
     case '/create':
-      sendMessage(id, 'you chose to create!')
-      const url = bot.create(teleUser)
-      sendMessage(id, 'your temporary input sheet url is ' + url)
+      reply('creating a temporary spreadsheet...')
+      const url = bot.create(id, tempFolderId)
+      reply('your temporary input sheet url is ' + url)
       break
     case '/list':
-      sendMessage(id, 'you chose to list!')
+      reply('listing existing spreadsheets...')
+      const ls = bot.list(id, tempFolderId)
+      reply(ls)
       break
     case '/delete':
-      sendMessage(id, 'you chose to delete!')
+      reply('deleting spreadsheet...')
       break
     default:
-      sendMessage(id, 'that is not a recognized command. have a nice day!')
+      reply('that is not a recognized command. have a nice day!')
   }
 }
 
