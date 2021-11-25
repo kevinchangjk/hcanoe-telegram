@@ -3,4 +3,4 @@
 clasp push
 clasp deploy \
   -d "hcanoe-telegram" \
-  -i "AKfycby2JwR2ZYlbIAC-w9UExzMX2XLpgEDIVL35NIm-hg2pB1lxlBfKql0Aj2rHmGePxGEN"
+  -i "AKfycbwIKAWH2iqUMG6JA9xVUXuwt5lKtlrBwWTSi8GTiIE8rhz0nevGdA6qZPqLBJZBogoF"
