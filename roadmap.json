@@ -1,0 +1,96 @@
+{
+  "title": "Telegram HCanoe Bot Roadmap",
+  "data structure": {
+    "summary": "each training will appear as a row in the `database` google sheet",
+    "columns": {
+      "event id": {
+        "description": "date and time of creation, in dd-mm-yyyy hh:mm:ss",
+        "value": "10-08-2021 17:41:08"
+      },
+      "last updated": {
+        "description": "date and time of last edit",
+        "value": "10-08-2021 17:41:08"
+      },
+      "athlete id": "graduation year and full name",
+      "telegram id": {
+        "description": "a number",
+        "value": 257481278
+      },
+      "type": {
+        "description": "type of training",
+        "value": ["water", "run", "weights", "bodyweight"]
+      },
+      "run": [
+        "timing_1",
+        "timing_2",
+        "timing_3",
+        "timing_4",
+        "timing_5",
+        "timing_6",
+        "timing_7",
+        "timing_8",
+        "timing_9",
+        "timing_10",
+        "timing_11",
+        "timing_12",
+        "timing_13",
+        "timing_14",
+        "timing_15",
+        "timing_16",
+        "timing_17",
+        "timing_18",
+        "timing_19",
+        "timing_20",
+        "rest_1",
+        "rest_2",
+        "rest_3",
+        "rest_4",
+        "rest_5",
+        "rest_6",
+        "rest_7",
+        "rest_8",
+        "rest_9",
+        "rest_10",
+        "rest_11",
+        "rest_12",
+        "rest_13",
+        "rest_14",
+        "rest_15",
+        "rest_16",
+        "rest_17",
+        "rest_18",
+        "rest_19",
+        "rest_20",
+        "distance_1",
+        "distance_2",
+        "distance_3",
+        "distance_4",
+        "distance_5",
+        "distance_6",
+        "distance_7",
+        "distance_8",
+        "distance_9",
+        "distance_10",
+        "distance_11",
+        "distance_12",
+        "distance_13",
+        "distance_14",
+        "distance_15",
+        "distance_16",
+        "distance_17",
+        "distance_18",
+        "distance_19",
+        "distance_20"
+      ],
+      "weights": ["bench_press_1"]
+    }
+  },
+  "data handling": {
+    "editing": "when a change is made to an existing training"
+  },
+  "commands": {
+    "create": "",
+    "list": "",
+    "delete": ""
+  }
+}
