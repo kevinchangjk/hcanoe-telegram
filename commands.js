@@ -1,5 +1,5 @@
 const bot = {
-  create: function (id, tempFolderId) {
+  create: function (id, tempFolderId, reply) {
     const t = SpreadsheetApp.create(id + ' ' + timestamp())
     const tempSheetId = t.getId()
     const tempSheetUrl = t.getUrl()
@@ -12,7 +12,7 @@ const bot = {
     const target = DriveApp.getFolderById(tempFolderId)
     source.moveTo(target)
 
-    return tempSheetUrl
+    reply('your temporary input sheet url is ' + tempSheetUrl)
   },
   list: function (tempFolderId, reply) {
     const folder = DriveApp.getFolderById(tempFolderId)

@@ -1,4 +1,4 @@
-const deploymentNumber = 78
+const deploymentNumber = 86
 const tempFolderId = '1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd'
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
 const telegramAppUrl = 'https://api.telegram.org/bot' + token
@@ -49,8 +49,7 @@ function doPost(e) {
   switch (text) {
     case '/create':
       reply('creating a temporary spreadsheet...')
-      const url = bot.create(id, tempFolderId)
-      reply('your temporary input sheet url is ' + url)
+      bot.create(id, tempFolderId, reply)
       break
     case '/list':
       reply('listing existing spreadsheets...')
@@ -70,7 +69,16 @@ function doPost(e) {
 // delete - remove existing google sheet
 
 function timestamp() {
+  const options = {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  }
   const ts = new Date()
   Logger.log(ts)
-  return ts.toDateString()
+  return ts.toLocaleDateString('en-SG', options)
 }
