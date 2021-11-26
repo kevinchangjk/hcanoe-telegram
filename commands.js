@@ -1,6 +1,6 @@
 const bot = {
   create: function (id, tempFolderId) {
-    const t = SpreadsheetApp.create(id + '-hcanoe-temp-input')
+    const t = SpreadsheetApp.create(id + ' ' + timestamp())
     const tempSheetId = t.getId()
     const tempSheetUrl = t.getUrl()
     t.addEditor('nikelyvengun@gmail.com')
@@ -14,9 +14,19 @@ const bot = {
 
     return tempSheetUrl
   },
-  list: function (id, tempFolderId) {
-    const drive = DriveApp.getFolderById(tempFolderId)
-    const results = drive.searchFolders("title contains '"+id+"'")
-    return results
-  }
+  list: function (tempFolderId, reply) {
+    const folder = DriveApp.getFolderById(tempFolderId)
+    var ls = []
+    var files = folder.getFiles()
+    while (files.hasNext()) {
+      var file = files.next()
+      var line = file.getName() + ' → ' + file.getUrl()
+      ls.push(line)
+    }
+    ls.length === 0
+      ? reply('you have no temp files')
+      : ls.forEach((e) => {
+          reply(e)
+        })
+  },
 }

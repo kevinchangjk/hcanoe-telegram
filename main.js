@@ -1,4 +1,4 @@
-const deploymentNumber = 55
+const deploymentNumber = 78
 const tempFolderId = '1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd'
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
 const telegramAppUrl = 'https://api.telegram.org/bot' + token
@@ -39,7 +39,7 @@ function doPost(e) {
   /* incoming info */
   const id = contents.message.from.id
   const text = contents.message.text
-  const user = contents.message.from.username
+  // const user = contents.message.from.username
   function reply(t) {
     telegram.sendMessage(id, t)
   }
@@ -54,8 +54,7 @@ function doPost(e) {
       break
     case '/list':
       reply('listing existing spreadsheets...')
-      const ls = bot.list(id, tempFolderId)
-      reply(ls)
+      bot.list(tempFolderId, reply)
       break
     case '/delete':
       reply('deleting spreadsheet...')
@@ -73,5 +72,5 @@ function doPost(e) {
 function timestamp() {
   const ts = new Date()
   Logger.log(ts)
-  return ts
+  return ts.toDateString()
 }
