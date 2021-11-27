@@ -1,4 +1,4 @@
-const deploymentNumber = 86
+const deploymentNumber = 133
 const tempFolderId = '1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd'
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
 const telegramAppUrl = 'https://api.telegram.org/bot' + token
@@ -10,11 +10,10 @@ const dbId = '1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8'
 function setWebhook() {
   const url = telegramAppUrl + '/setWebhook?url=' + webAppUrl
   UrlFetchApp.fetch(url)
-  // const response = UrlFetchApp.fetch(url)
-  // Logger.log(response.getContentText())
 }
 
 const telegram = {
+  /* sends the user a prompt message */
   sendMessage: function (id, text) {
     const url =
       telegramAppUrl +
@@ -25,6 +24,20 @@ const telegram = {
       '&disable_web_page_preview=true'
     UrlFetchApp.fetch(url)
   },
+  /* sends the user a prompt message with a menu */
+  sendMenu: function (id, text, menu) {
+    const data = {
+      method: 'post',
+      payload: {
+        method: 'sendMessage',
+        chat_id: String(id),
+        text: text,
+        parse_mode: 'HTML',
+        reply_markup: JSON.stringify(menu),
+      },
+    }
+    UrlFetchApp.fetch(telegramAppUrl + '/', data)
+  },
 }
 
 /*
@@ -34,8 +47,21 @@ const telegram = {
 // sheet.appendRow([timestamp(), 'next column text'])
 
 function doPost(e) {
+  /* starting point */
   const contents = JSON.parse(e.postData.contents)
 
+  /* splits handling based on if the input is
+   * a command message,
+   * or a button press from a menu
+   */
+  if (contents.message) {
+    handle_message(contents)
+  } else if (contents.callback_query) {
+    handle_callback(contents)
+  }
+}
+
+function handle_message(contents) {
   /* incoming info */
   const id = contents.message.from.id
   const text = contents.message.text
@@ -46,27 +72,59 @@ function doPost(e) {
 
   reply('deployment ' + deploymentNumber)
 
+  /* commands list
+   * create - make a new temporary google sheet for data entry
+   * list - show all current google sheets
+   * delete - remove existing google sheet
+   * test - for devs
+   */
   switch (text) {
     case '/create':
-      reply('creating a temporary spreadsheet...')
-      bot.create(id, tempFolderId, reply)
+      bot.create(id, tempFolderId)
       break
     case '/list':
-      reply('listing existing spreadsheets...')
-      bot.list(tempFolderId, reply)
+      bot.list(id, tempFolderId)
       break
-    case '/delete':
-      reply('deleting spreadsheet...')
+    case '/remove':
+      bot.remove(id, tempFolderId)
+      break
+    case '/test':
+      const menu = {
+        /* commands list
+         * create - make a new temporary google sheet for data entry
+         * list - show all current google sheets
+         * remove - remove existing google sheet
+         * test - for devs
+         */
+        inline_keyboard: [
+          [{ text: 'budget', callback_data: 'budget' }],
+          [{ text: 'expenses', callback_data: 'expenses' }],
+          [{ text: 'savings', callback_data: 'savings' }],
+        ],
+      }
+      telegram.sendMenu(id, 'something', menu)
       break
     default:
       reply('that is not a recognized command. have a nice day!')
   }
 }
 
-// commands list
-// create - make a new temporary google sheet for data entry
-// list - show all current google sheets
-// delete - remove existing google sheet
+function handle_callback(contents) {
+  const id = contents.callback_query.from.id
+  const data = contents.callback_query.data
+
+  const split = data.split('/')
+  const command = split[1]
+
+  /* parse out id from callback data,
+   * then send a drive request to delete file of supplied id
+   */
+  if (command == 'remove') {
+    const filename = DriveApp.getFileById(split[2]).getName()
+    telegram.sendMessage(id, 'removed the spreadsheet: ' + filename)
+    Drive.Files.remove(split[2])
+  }
+}
 
 function timestamp() {
   const options = {
@@ -82,3 +140,6 @@ function timestamp() {
   Logger.log(ts)
   return ts.toLocaleDateString('en-SG', options)
 }
+
+// documentation: https://core.telegram.org/bots/api
+// vim:tw=80
