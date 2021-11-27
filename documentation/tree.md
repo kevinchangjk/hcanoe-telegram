@@ -1,44 +1,39 @@
-main menu
-- create
-- list current files
-- submit file
-- data analytics
-  - water
-  - run
-  - weights
-- user config
-  - change email
+# Main Menu
 
+What the telegram user interacts with
 
-google drive file structure
+```
+┗━ create
+┗━ list
+┗━ submit
+┗━ remove
+┗━ data analytics
+┃  ┗━ water
+┃  ┗━ run
+┃  ┗━ weights
+┗━ user config
+   ┗━ change email
+```
+
+# Google Drive File Structure
+
+```
 ┗━ database
 ┃  ┗━ personal_data
 ┃  ┗━ training_data
-┗━
+┗━ temp
+┃  ┗━ [all temporary training files]
+```
 
 `personal_data`
-* sheet 1: main
-telegram handle
-email (to know which email to share new temporary sheet to)
+* __sheet 1:__ main
+  * telegram handle
+  * email (to know which email to share new temporary sheet to)
 
 `training_data`
-* sheet 1: run
-* sheet 2: water
-* sheet 3: weights
-
-
-
-─	━	│	┃	┄	┅	┆	┇	┈	┉	┊	┋	┌	┍	┎	┏
-
-┐	┑	┒	┓	└	┕	┖	┗	┘	┙	┚	┛	├	┝	┞	┟
-
-┠	┡	┢	┣	┤	┥	┦	┧	┨	┩	┪	┫	┬	┭	┮	┯
-
-┰	┱	┲	┳	┴	┵	┶	┷	┸	┹	┺	┻	┼	┽	┾	┿
-
-╀	╁	╂	╃	╄	╅	╆	╇	╈	╉	╊	╋	╌	╍	╎	╏
-
-╰	╱	╲	╳	╴	╵	╶	╷	╸	╹	╺	╻	╼	╽	╾	╿
+* __sheet 1:__ run
+* __sheet 2:__ water
+* __sheet 3:__ weights
 
 ---------
 vim:tw=70
