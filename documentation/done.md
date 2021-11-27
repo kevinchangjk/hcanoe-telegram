@@ -13,5 +13,15 @@ drive/sheets doesn't work), then copy the code over to a new google
 apps script file and run it. It should prompt you for permission
 access.
 
+# setup deletion permissions on Google Drive
+
+In order to be able to remotely permanently delete files, you need to
+enable Advanced Drive Service on the Google Apps Script file.
+
+https://developers.google.com/apps-script/advanced/drive
+
+To do this, go to the Google Apps Script file on your web browser,
+and go Editor > Services, click the "+" sign and choose "Drive"
+
 ---------
 vim:tw=70
