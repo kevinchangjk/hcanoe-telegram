@@ -1,6 +1,5 @@
 #! /bin/zsh
 
-
 clasp push
 clasp deploy \
   -d 'hcanoe-telegram' \
