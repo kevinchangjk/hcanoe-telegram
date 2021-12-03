@@ -1,4 +1,4 @@
-const deploymentNumber = 143
+const deploymentNumber = 145
 // comment comment
 const tempFolderId = '1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd'
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
@@ -7,11 +7,6 @@ const deploymentId =
   'AKfycbzcFpg2hNfBR7JiZTpqn-9etmDfiE8v-tOFOcTVDRfdfs6xxjC6huhPopssEHDkGzxo'
 const webAppUrl = 'https://script.google.com/macros/s/' + deploymentId + '/exec'
 const dbId = '1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8'
-
-function setWebhook() {
-  const url = telegramAppUrl + '/setWebhook?url=' + webAppUrl
-  UrlFetchApp.fetch(url)
-}
 
 const telegram = {
   /* sends the user a prompt message */
