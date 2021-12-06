@@ -33,14 +33,17 @@ const bot = {
     const folder = DriveApp.getFolderById(tempFolderId);
 
     /* Gets an array of files under temp folder.
-     * Each element is { name, url, id }.
+     * Each element is a string of comprising file name and URL.
      */
     var ls = [];
     var files = folder.getFiles(); // object of directory tree
     while (files.hasNext()) {
       var file = files.next();
-      var line = file.getName() + " → " + file.getUrl();
-      ls.push(line);
+      const name = file.getName();
+      if (name.split(" ")[0] === id) {
+        var line = name + " → " + file.getUrl();
+        ls.push(line);
+      } else {}
     }
 
     /* tells if user has no current temp files */
