@@ -17,10 +17,12 @@ function setup() {
   git remote add upstream git@github.com:hcanoe/hcanoe-telegram.git
 
   # pull latest updates from clasp
+  # initializes .clasp.json
   clasp clone 19u4j16riV0fL_Tdnbpx30VdR6zTMDouLC3E3QD41DI77AMAiONqLNSke
 
   # just in case
   git checkout .
+  git clean -fxd --exclude=".clasp.json"
 
   printf "[${YELLOW}setup done.${NORMAL}]\n"
 }
