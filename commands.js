@@ -40,7 +40,7 @@ const bot = {
     while (files.hasNext()) {
       var file = files.next();
       const name = file.getName();
-      if (name.split(" ")[0] === id) {
+      if (name.split(" ")[0] == id) {
         var line = name + " → " + file.getUrl();
         ls.push(line);
       } else {}
