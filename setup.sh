@@ -15,7 +15,7 @@ function setup() {
   mv -f hcanoe-telegram hcanoe-telegram.bak &> /dev/null
   git clone git@github.com:$GIT_USERNAME/hcanoe-telegram.git hcanoe-telegram
   cd hcanoe-telegram
-  clasp clone 1V0CzP2zK8MfYGOfJwXX4xJqwIu1CXvzH0UzhBdv3S2yz-mmG_nOMX0gn
+  clasp clone 19u4j16riV0fL_Tdnbpx30VdR6zTMDouLC3E3QD41DI77AMAiONqLNSke
   git checkout .
   printf "[${YELLOW}setup done.${NORMAL}]\n"
 }
