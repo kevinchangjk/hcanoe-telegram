@@ -99,15 +99,12 @@ const bot = {
       inline_keyboard: options,
     });
   },
+  /* searches user database and replies with name of user */
   whoami: function (id, tempFolder, userDB) {
     const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users")
     const data = utils.arrayToObject(sheet.getDataRange().getValues())
-    Logger.log(data)
-
-    // const me = data.find((e) => e[0] == id)
-    // telegram.sendMessage(id, String(id))
-    // data[<row>][<column>]
-    // telegram.sendMessage(id, me[2])
+    const me = data.find((e) => e.telegram_id == id)
+    telegram.sendMessage(id, "you are " + me.name)
   }
 };
 
