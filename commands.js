@@ -101,16 +101,13 @@ const bot = {
   },
   whoami: function (id, tempFolder, userDB) {
     const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users")
-    const data = sheet.getDataRange().getValues()
+    const data = utils.arrayToObject(sheet.getDataRange().getValues())
+    Logger.log(data)
 
-    // try new thing
-    const headed = sheet.getDa.getDataTable()
-    console.log(headed)
-
-    const me = data.find((e) => e[1] == id)
-    telegram.sendMessage(id, String(id))
+    // const me = data.find((e) => e[0] == id)
+    // telegram.sendMessage(id, String(id))
     // data[<row>][<column>]
-    telegram.sendMessage(id, me[2])
+    // telegram.sendMessage(id, me[2])
   }
 };
 
@@ -128,6 +125,7 @@ const callback = {
     Drive.Files.remove(args);
   },
 };
+
 
 /* documentation: https://core.telegram.org/bots/api
  * vim:tw=70
