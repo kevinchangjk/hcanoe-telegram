@@ -1,10 +1,11 @@
 const deploymentNumber = 145
 // comment comment
 const tempFolderId = '1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd'
+const userDB = '1ELVWByWDsxMfZ3RwSz-fRSrrLsD0JIndlqab-J_0PkI'
 const token = '2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U'
 const telegramAppUrl = 'https://api.telegram.org/bot' + token
 const deploymentId =
-  'AKfycbzcFpg2hNfBR7JiZTpqn-9etmDfiE8v-tOFOcTVDRfdfs6xxjC6huhPopssEHDkGzxo'
+  'AKfycbzGPrT3kZ8h7MiDPE5os1e7Mo-r_Fb_oIR-6Fqq05Mjwjk-yueUogpFZ8R4wc6GnzQh'
 const webAppUrl = 'https://script.google.com/macros/s/' + deploymentId + '/exec'
 const dbId = '1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8'
 
@@ -74,6 +75,7 @@ function handle_message(contents) {
    * create - make a new temporary google sheet for data entry
    * list - show all current google sheets
    * delete - remove existing google sheet
+   * whoami - see your own profile
    * test - for devs
    */
   switch (text) {
@@ -86,14 +88,11 @@ function handle_message(contents) {
     case '/remove':
       bot.remove(id, tempFolderId)
       break
+    case '/whoami':
+      bot.whoami(id, tempFolderId, userDB)
+      break
     case '/test':
       const menu = {
-        /* commands list
-         * create - make a new temporary google sheet for data entry
-         * list - show all current google sheets
-         * remove - remove existing google sheet
-         * test - for devs
-         */
         inline_keyboard: [
           [{ text: 'budget', callback_data: 'budget' }],
           [{ text: 'expenses', callback_data: 'expenses' }],

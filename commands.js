@@ -99,6 +99,19 @@ const bot = {
       inline_keyboard: options,
     });
   },
+  whoami: function (id, tempFolder, userDB) {
+    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users")
+    const data = sheet.getDataRange().getValues()
+
+    // try new thing
+    const headed = sheet.getDa.getDataTable()
+    console.log(headed)
+
+    const me = data.find((e) => e[1] == id)
+    telegram.sendMessage(id, String(id))
+    // data[<row>][<column>]
+    telegram.sendMessage(id, me[2])
+  }
 };
 
 /* functions handling callback (i.e. input from inline keyboards)
