@@ -6,13 +6,16 @@ const bot = {
   create: function (id, tempFolderId) {
     telegram.sendMessage(id, "creating a temporary spreadsheet...");
 
+    /* create a new sheet */
     const newSheet = SpreadsheetApp.create(id + " " + timestamp());
 
-    /* shares spreadsheet with an email */
-    newSheet.addEditor("nikelyvengun@gmail.com");
-    /* TODO: email should be read from a database
-     * containing telegram handles and emails
-     */
+    /* get the user's email */
+    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users")
+    const data = utils.arrayToObject(sheet.getDataRange().getValues())
+    const me = data.find((e) => e.telegram_id == id)
+
+    /* shares spreadsheet with the user's email */
+    newSheet.addEditor(me.email);
 
     /* moves the new spreadsheet into a fixed folder */
     const source = DriveApp.getFileById(newSheet.getId());
