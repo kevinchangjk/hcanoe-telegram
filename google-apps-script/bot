@@ -1,0 +1,149 @@
+#! /bin/bash
+
+# this script takes a maximum of one argument
+# life's too short for more arguments
+
+# usage:
+# ./bot [-d --deploy] [-p --push] [-h --help]
+
+# before jumping into the code,
+# there are four functions in this script:
+#   send_help      prints help message
+#   other_branch   prints warning if not on master or dev branch
+#   bot_action     alters files to prep for push/deployment
+#   main           decides what to do based on argument
+
+# help text
+function short_help() {
+cat <<EOF
+
+USAGE:
+    ./bot [-d --deploy] [-p --push] [-h --help]
+    ./bot --deploy
+    ./bot --push
+    ./bot --help
+
+EOF
+}
+function long_help() {
+cat <<EOF
+
+USAGE:
+    ./bot [OPTIONS]
+    ./bot [-p --push] [-d --deploy] [-h --help]
+
+OPTIONS:
+    -p, --push
+        Pushes files from local folder to Google App Script Project. The
+        project pushed to depends on your current git branch checked out.
+
+        If you're on <master> branch:
+        files will be pushed to the project behind t.me/hcanoe_bot
+
+        If you're on <dev> or any other branch:
+        files will be pushed to the project behind t.me/hcanoe_testing_bot
+
+    -d, --deploy
+        same as --push, but also deploys the web app, making it live on
+        telegram.
+
+    -h, --help
+        display this help message again.
+
+EOF
+}
+
+# prints warning that you're not on master nor dev
+function other_branch() {
+cat <<EOF
+
+You're not on either master nor dev branch.
+Defaulting to dev branch settings.
+
+EOF
+}
+
+# where the magic happens
+function bot_action() {
+  # creates a unique deployment message based on
+  # git branch and time of deployment
+  TIMESTAMP=$(date "+%-d %b, %H:%M:%S")
+  DEPLOYMENT_MESSAGE="[$BRANCH] $TIMESTAMP"
+
+  printf "\nYour deployment message will be:\n\n"
+  printf "$DEPLOYMENT_MESSAGE\n"
+
+  # create some temporary files to work with
+  cp _dev.js __bot._dev.js
+  cp .clasp.json __bot..clasp.json
+
+  # sets variables depending on branch
+  if [ "$BRANCH" = "master" ]; then
+    BOT_NAME="main"
+    DEPLOYMENT_NAME="hcanoe"
+    DEPLOYMENT_ID="AKfycbzGPrT3kZ8h7MiDPE5os1e7Mo-r_Fb_oIR-6Fqq05Mjwjk-yueUogpFZ8R4wc6GnzQh"
+    API_TOKEN="2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U"
+    SCRIPT_ID="19u4j16riV0fL_Tdnbpx30VdR6zTMDouLC3E3QD41DI77AMAiONqLNSke"
+  else
+    BOT_NAME="dev"
+    DEPLOYMENT_NAME="dev"
+    DEPLOYMENT_ID="AKfycby3LijqYqJaLRaL8NkFSzuMMbCUCD79Ncc0q5xjm2uQcQI2boaQS15BYLMJB2UHEJ9k8g"
+    API_TOKEN="5087729377:AAHR1J0s01AIdgmdiLQTAbqnHkAB0esJka4"
+    SCRIPT_ID="1rGoXo6RXG8EGYU5LYhhdL9sgkn8lNDiP6_YeauLp-sO3CA0dxpUsdLcc"
+    [ ! "$BRANCH" = "dev" ] && OTHER_BRANCH=true
+  fi
+
+  # sets the google apps script id
+  sed -r "s/(.*scriptId\": ).*/\1\"$SCRIPT_ID\",/" \
+    __bot..clasp.json > .clasp.json
+
+  # get previous deployment id
+  OLD_DEPLOYMENT_ID=$(grep "deploymentId" -A1 __bot._dev.js | tail -n 1 | sed -r "s/.*\"(.*)\".*/\1/")
+
+  # sets the telegram api token and embeds the deployment message
+  sed -r "s/$OLD_DEPLOYMENT_ID/$DEPLOYMENT_ID/" __bot._dev.js \
+    | sed -r "s/(.*token = ).*/\1\"$API_TOKEN\";/" \
+    | sed -r "s/(.*deploymentMessage = ).*/\1\"$DEPLOYMENT_MESSAGE\";/" \
+    > _dev.js
+
+  # clears temporary files
+  rm __bot._dev.js
+  rm __bot..clasp.json
+}
+
+function main() {
+  # color my pencils
+  NORMAL="\e[1;0m"
+  GREEN="\e[1;32m"
+
+  # gets the current git branch
+  BRANCH=$(git branch --show-current)
+
+  # split cases based on arguments
+  case $1 in
+    '--help'|'-h')
+      long_help
+      ;;
+    '--push'|'-p')
+      bot_action
+      [ $OTHER_BRANCH ] && other_branch
+      printf "\nPushing to $GREEN$BOT_NAME$NORMAL bot...\n\n"
+      clasp push
+      ;;
+    '--deploy'|'-d')
+      bot_action
+      [ $OTHER_BRANCH ] && other_branch
+      printf "Deploying to $GREEN$BOT_NAME$NORMAL bot...\n\n"
+      clasp push
+      clasp deploy \
+        -d "$DEPLOYMENT_NAME" \
+        -i "$DEPLOYMENT_ID"
+      ;;
+    *)
+      short_help
+      ;;
+  esac
+}
+
+[ ! -z $2 ] && echo "too many arguments provided" \
+  || main $1
