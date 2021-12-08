@@ -19,5 +19,5 @@
 - [Google Drive Directory Tree](Google-Drive-Directory-Tree)
 
 ## Ideas
-- [Strava Integration]()
+- [Strava Integration](Strava-Integration)
 - [Attendance](Attendance)
