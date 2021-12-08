@@ -4,7 +4,7 @@ NORMAL="\e[1;0m"
 YELLOW="\e[1;33m"
 
 function setup() {
-  printf "[${YELLOW}starting setup...${NORMAL}]\n"
+  printf "\n[${YELLOW}starting setup...${NORMAL}]\n"
 
   # backup an existing folder if any
   mv -f hcanoe-telegram hcanoe-telegram.bak &> /dev/null
@@ -32,7 +32,7 @@ function setup() {
 }
 
 read -p "Enter your Github username: " GIT_USERNAME
-printf "Set up project in a new folder ${YELLOW}./hcanoe-telegram${NORMAL}?\n"
+printf "\nSet up project in a new folder ${YELLOW}./hcanoe-telegram${NORMAL}?\n"
 printf "This will:\n"
 printf "  * create a new folder at ./hcanoe-telegram\n"
 printf "  * clone the project into ./hcanoe-telegram\n"
