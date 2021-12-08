@@ -10,6 +10,7 @@
 - [Get Started](Get-Started)
 - [Contributing](Contributing)
   - [Next Up](Next-Up)
+  - [Release Timeline](Release-Timeline)
 - [Style Guide](Style-Guide)
 - [Development Log](Development-Log)
 - [Admin Handover](Admin-Handover)
