@@ -1,6 +1,0 @@
-#! /bin/zsh
-
-clasp push
-clasp deploy \
-  -d 'hcanoe' \
-  -i 'AKfycbzGPrT3kZ8h7MiDPE5os1e7Mo-r_Fb_oIR-6Fqq05Mjwjk-yueUogpFZ8R4wc6GnzQh'
