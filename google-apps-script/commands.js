@@ -10,9 +10,9 @@ const bot = {
     const newSheet = SpreadsheetApp.create(id + " " + timestamp());
 
     /* get the user's email */
-    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users")
-    const data = utils.arrayToObject(sheet.getDataRange().getValues())
-    const me = data.find((e) => e.telegram_id == id)
+    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users");
+    const data = utils.arrayToObject(sheet.getDataRange().getValues());
+    const me = data.find((e) => e.telegram_id == id);
 
     /* shares spreadsheet with the user's email */
     newSheet.addEditor(me.email);
@@ -46,7 +46,8 @@ const bot = {
       if (name.split(" ")[0] == id) {
         var line = name + " → " + file.getUrl();
         ls.push(line);
-      } else {}
+      } else {
+      }
     }
 
     /* tells if user has no current temp files */
@@ -107,11 +108,11 @@ const bot = {
   },
   /* searches user database and replies with name of user */
   whoami: function (id, tempFolder, userDB) {
-    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users")
-    const data = utils.arrayToObject(sheet.getDataRange().getValues())
-    const me = data.find((e) => e.telegram_id == id)
-    telegram.sendMessage(id, "you are " + me.name)
-  }
+    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users");
+    const data = utils.arrayToObject(sheet.getDataRange().getValues());
+    const me = data.find((e) => e.telegram_id == id);
+    telegram.sendMessage(id, "you are " + me.name);
+  },
 };
 
 /* functions handling callback (i.e. input from inline keyboards)
@@ -128,7 +129,6 @@ const callback = {
     Drive.Files.remove(args);
   },
 };
-
 
 /* documentation: https://core.telegram.org/bots/api
  * vim:tw=70
