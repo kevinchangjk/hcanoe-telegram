@@ -133,7 +133,7 @@ function main() {
     '--deploy'|'-d')
       bot_action
       [ $OTHER_BRANCH ] && other_branch
-      printf "Deploying to $GREEN$BOT_NAME$NORMAL bot...\n\n"
+      printf "\nDeploying to $GREEN$BOT_NAME$NORMAL bot...\n\n"
       clasp push
       clasp deploy \
         -d "$DEPLOYMENT_NAME" \

@@ -1,11 +1,6 @@
-const deploymentNumber = 1;
-// comment comment
 const tempFolderId = "1iQDiZbWZkro--EQy-CyA0Y5SnSIplPkd";
 const userDB = "1ELVWByWDsxMfZ3RwSz-fRSrrLsD0JIndlqab-J_0PkI";
-const token = "2113008414:AAH4CbDxNzHnA28I2yS-3uJHyW8LQXTBN-U";
 const telegramAppUrl = "https://api.telegram.org/bot" + token;
-const deploymentId =
-  "AKfycbzGPrT3kZ8h7MiDPE5os1e7Mo-r_Fb_oIR-6Fqq05Mjwjk-yueUogpFZ8R4wc6GnzQh";
 const webAppUrl =
   "https://script.google.com/macros/s/" + deploymentId + "/exec";
 const dbId = "1FOi7blMjvtZeM7hqWYN_pTp9wiHDr-RzZG8pD3aBgV8";
@@ -70,7 +65,7 @@ function handle_message(contents) {
   const text = contents.message.text;
   // const user = contents.message.from.username
 
-  telegram.sendMessage(id, "deployment " + deploymentNumber);
+  telegram.sendMessage(id, deploymentMessage);
 
   /* commands list
    * create - make a new temporary google sheet for data entry
