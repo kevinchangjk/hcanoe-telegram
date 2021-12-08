@@ -13,6 +13,9 @@ function setup() {
   git clone git@github.com:$GIT_USERNAME/hcanoe-telegram.git hcanoe-telegram
   cd hcanoe-telegram
 
+  # symlink the pre-commit hook into .git/hooks/pre-commit
+  ln -s $PWD/.hooks/pre-commit $PWD/.git/hooks/pre-commit
+
   # set upstream remote
   git remote add upstream git@github.com:hcanoe/hcanoe-telegram.git
 
