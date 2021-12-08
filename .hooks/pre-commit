@@ -1,0 +1,7 @@
+#! /bin/sh
+
+# --name only restricts git diff to show only filenames
+# --diff-filter=d excludes all deleted files
+git diff --name-only --staged --diff-filter=d\
+  | grep "\.js\|\.json" \
+  | xargs yarn prettier --write
