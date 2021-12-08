@@ -1,0 +1,7 @@
+#! /bin/sh
+
+# generates sidebar to match Home.md,
+# but with a logo at the top
+echo "[[[https://raw.githubusercontent.com/hcanoe/hcanoe-telegram/master/images/logo.png]]](Home)\n------" > _Sidebar.md
+cat Home.md | sed -r 's/^## ([A-Za-z]*)/\1\n-----/g' >> _Sidebar.md
+git add _Sidebar.md
