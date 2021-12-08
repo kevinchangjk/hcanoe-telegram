@@ -1,0 +1,1 @@
+This is the _hcanoe-telegram_ wiki. [Wiki Home](https://github.com/hcanoe/hcanoe-telegram/wiki)
