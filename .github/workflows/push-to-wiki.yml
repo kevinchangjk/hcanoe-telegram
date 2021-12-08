@@ -1,6 +1,9 @@
 name: Wiki
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'wiki/**'
 
 jobs:
   build:
