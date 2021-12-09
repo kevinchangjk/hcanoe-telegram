@@ -14,6 +14,7 @@ Developers
 - [Get Started](Get-Started)
 - [Contributing](Contributing)
   - [Next Up](Next-Up)
+  - [Release Timeline](Release-Timeline)
 - [Style Guide](Style-Guide)
 - [Development Log](Development-Log)
 - [Admin Handover](Admin-Handover)
@@ -25,5 +26,5 @@ Documentation
 
 Ideas
 -----
-- [Strava Integration]()
+- [Strava Integration](Strava-Integration)
 - [Attendance](Attendance)
