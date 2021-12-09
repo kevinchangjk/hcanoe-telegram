@@ -94,7 +94,7 @@ function bot_action() {
   fi
 
   # sets the google apps script id
-  sed -r "s/(.*scriptId\": ).*/\1\"$SCRIPT_ID\",/" \
+  sed -r "s/(.*scriptId\": \").*(\",.*)/\1$SCRIPT_ID\2/" \
     __bot..clasp.json > .clasp.json
 
   # get previous deployment id
