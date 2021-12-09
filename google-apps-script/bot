@@ -65,6 +65,9 @@ EOF
 
 # where the magic happens
 function bot_action() {
+  # gets the current git branch
+  BRANCH=$(git branch --show-current)
+
   # creates a unique deployment message based on
   # git branch and time of deployment
   TIMESTAMP=$(date "+%-d %b, %H:%M:%S")
@@ -94,7 +97,7 @@ function bot_action() {
   fi
 
   # sets the google apps script id
-  sed -r "s/(.*scriptId\": \").*(\",.*)/\1$SCRIPT_ID\2/" \
+  sed -r "s/(.*scriptId\": ?\").*(\",.*)/\1$SCRIPT_ID\2/" \
     __bot..clasp.json > .clasp.json
 
   # get previous deployment id
@@ -115,9 +118,6 @@ function main() {
   # color my pencils
   NORMAL="\e[1;0m"
   GREEN="\e[1;32m"
-
-  # gets the current git branch
-  BRANCH=$(git branch --show-current)
 
   # split cases based on arguments
   case $1 in
