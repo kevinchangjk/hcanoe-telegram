@@ -72,6 +72,7 @@ function handle_message(contents) {
    * list - show all current google sheets
    * delete - remove existing google sheet
    * whoami - see your own profile
+   * config - edit your own profile
    * test - for devs
    */
   switch (text) {
@@ -86,6 +87,9 @@ function handle_message(contents) {
       break;
     case "/whoami":
       bot.whoami(id, tempFolderId, userDB);
+      break;
+    case "/config":
+      bot.config(id, tempFolderId, userDB);
       break;
     case "/test":
       const menu = {
@@ -122,6 +126,9 @@ function handle_callback(contents) {
   switch (command) {
     case "remove":
       callback.remove(id, args);
+      break;
+    case "config":
+      callback.config(id, args);
       break;
   }
 }
