@@ -10,8 +10,11 @@ const bot = {
     const newSheet = SpreadsheetApp.create(id + " " + timestamp());
 
     /* get the user's email */
-    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users");
-    const data = utils.arrayToObject(sheet.getDataRange().getValues());
+    const sheet =
+      SpreadsheetApp.openById(userDB).getSheetByName("users");
+    const data = utils.arrayToObject(
+      sheet.getDataRange().getValues()
+    );
     const me = data.find((e) => e.telegram_id == id);
 
     /* shares spreadsheet with the user's email */
@@ -108,19 +111,25 @@ const bot = {
   },
   /* searches user database and replies with name of user */
   whoami: function (id, tempFolderId, userDB) {
-    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users");
-    const data = utils.arrayToObject(sheet.getDataRange().getValues());
+    const sheet =
+      SpreadsheetApp.openById(userDB).getSheetByName("users");
+    const data = utils.arrayToObject(
+      sheet.getDataRange().getValues()
+    );
     const me = data.find((e) => e.telegram_id == id);
     telegram.sendMessage(id, "you are " + me.name);
   },
-  
+
   /* displays user particulars from database,
    * prompts user with a menu of which data to edit or to cancel,
    * then receives a string input to write into database
    */
   config: function (id, tempFolderId, userDB) {
-    const sheet = SpreadsheetApp.openById(userDB).getSheetByName("users");
-    const data = utils.arrayToObject(sheet.getDataRange().getValues());
+    const sheet =
+      SpreadsheetApp.openById(userDB).getSheetByName("users");
+    const data = utils.arrayToObject(
+      sheet.getDataRange().getValues()
+    );
     const me = data.find((e) => e.telegram_id == id);
     const res = [];
     const options = [];
@@ -128,15 +137,21 @@ const bot = {
       const detailsTemp = detail + ": " + me[detail];
       res.append(detailsTemp);
       const optionTemp = {
-	text: detail,
-	callback_data: "/config/" + detail,
-      }
+        text: detail,
+        callback_data: "/config/" + detail,
+      };
       options.append(optionTemp);
     }
-    telegram.sendMessage(id, "Your particulars are currently saved as ---\n" + res.join("\n"));
+    telegram.sendMessage(
+      id,
+      "Your particulars are currently saved as ---\n" + res.join("\n")
+    );
 
     // displays menu of options, and receives input
-    options.append({text: "Cancel", callback_data: "/config/" + "cancel"});
+    options.append({
+      text: "Cancel",
+      callback_data: "/config/" + "cancel",
+    });
     telegram.sendMenu(id, "Choose a data to edit:", {
       inline_keyboard: options,
     });
@@ -158,8 +173,11 @@ const callback = {
   },
   config: function (id, args) {
     /* prompts for new value of metadata, and updates database */
-    telegram.sendMessage(id, "What do you want to update your " + args + " to?");
-  } 
+    telegram.sendMessage(
+      id,
+      "What do you want to update your " + args + " to?"
+    );
+  },
 };
 
 /* documentation: https://core.telegram.org/bots/api
